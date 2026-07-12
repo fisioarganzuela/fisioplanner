@@ -50,7 +50,7 @@ function AuthPage() {
           </p>
           <p className="mt-6 max-w-md text-primary-foreground/85 text-lg">
             Organiza las clases de Pilates máquina del centro: bloques trimestrales,
-            planificación semanal y trazabilidad entre monitoras.
+            planificación semanal.
           </p>
         </div>
         <p className="text-sm text-primary-foreground/70">« La salud es el silencio del cuerpo »</p>
