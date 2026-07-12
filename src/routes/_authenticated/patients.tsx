@@ -10,7 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PageHeader } from "@/components/page-header";
-import { BLOCKS, LEVELS, levelLabel } from "@/lib/pilates";
+import { LEVELS, levelLabel } from "@/lib/pilates";
+import { useBlocks } from "@/hooks/use-blocks";
 import { Plus, Phone, Mail, Pencil, Trash2, Search } from "lucide-react";
 import { toast } from "sonner";
 
@@ -148,6 +149,8 @@ function PatientsPage() {
 }
 
 function PatientDialog({ editing, setEditing, onSave }: { editing: Patient; setEditing: (p: Patient) => void; onSave: () => void }) {
+  const { blocks, byOrder } = useBlocks();
+  const currentBlock = byOrder(editing.current_block);
   return (
     <DialogContent className="max-w-lg">
       <DialogHeader>
@@ -185,8 +188,9 @@ function PatientDialog({ editing, setEditing, onSave }: { editing: Patient; setE
             <Select value={String(editing.current_block)} onValueChange={(v) => setEditing({ ...editing, current_block: Number(v) })}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                {[1, 2, 3, 4].map((b) => (
-                  <SelectItem key={b} value={String(b)}>Bloque {b}</SelectItem>
+                {blocks.length === 0 && <SelectItem value="1">Sin bloques definidos</SelectItem>}
+                {blocks.map((b) => (
+                  <SelectItem key={b.id} value={String(b.sort_order)}>Bloque {b.sort_order} · {b.title}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -203,9 +207,11 @@ function PatientDialog({ editing, setEditing, onSave }: { editing: Patient; setE
             </Select>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground -mt-2">
-          {BLOCKS[editing.current_block]?.title} · {BLOCKS[editing.current_block]?.months}
-        </p>
+        {currentBlock && (
+          <p className="text-xs text-muted-foreground -mt-2">
+            {currentBlock.title}{currentBlock.focus ? ` · ${currentBlock.focus}` : ""}
+          </p>
+        )}
         <div className="space-y-2">
           <Label>Notas clínicas / lesiones / contraindicaciones</Label>
           <Textarea rows={4} value={editing.notes ?? ""} onChange={(e) => setEditing({ ...editing, notes: e.target.value })} />

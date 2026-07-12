@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedWeekRouteImport } from './routes/_authenticated/week'
 import { Route as AuthenticatedPatientsRouteImport } from './routes/_authenticated/patients'
 import { Route as AuthenticatedObjectivesRouteImport } from './routes/_authenticated/objectives'
+import { Route as AuthenticatedBlocksRouteImport } from './routes/_authenticated/blocks'
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 
 const AuthRoute = AuthRouteImport.update({
@@ -46,6 +47,11 @@ const AuthenticatedObjectivesRoute = AuthenticatedObjectivesRouteImport.update({
   path: '/objectives',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBlocksRoute = AuthenticatedBlocksRouteImport.update({
+  id: '/blocks',
+  path: '/blocks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAuditRoute = AuthenticatedAuditRouteImport.update({
   id: '/audit',
   path: '/audit',
@@ -56,6 +62,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/audit': typeof AuthenticatedAuditRoute
+  '/blocks': typeof AuthenticatedBlocksRoute
   '/objectives': typeof AuthenticatedObjectivesRoute
   '/patients': typeof AuthenticatedPatientsRoute
   '/week': typeof AuthenticatedWeekRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/audit': typeof AuthenticatedAuditRoute
+  '/blocks': typeof AuthenticatedBlocksRoute
   '/objectives': typeof AuthenticatedObjectivesRoute
   '/patients': typeof AuthenticatedPatientsRoute
   '/week': typeof AuthenticatedWeekRoute
@@ -74,21 +82,37 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
+  '/_authenticated/blocks': typeof AuthenticatedBlocksRoute
   '/_authenticated/objectives': typeof AuthenticatedObjectivesRoute
   '/_authenticated/patients': typeof AuthenticatedPatientsRoute
   '/_authenticated/week': typeof AuthenticatedWeekRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/audit' | '/objectives' | '/patients' | '/week'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/audit'
+    | '/blocks'
+    | '/objectives'
+    | '/patients'
+    | '/week'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/audit' | '/objectives' | '/patients' | '/week'
+  to:
+    | '/'
+    | '/auth'
+    | '/audit'
+    | '/blocks'
+    | '/objectives'
+    | '/patients'
+    | '/week'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/audit'
+    | '/_authenticated/blocks'
     | '/_authenticated/objectives'
     | '/_authenticated/patients'
     | '/_authenticated/week'
@@ -144,6 +168,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedObjectivesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/blocks': {
+      id: '/_authenticated/blocks'
+      path: '/blocks'
+      fullPath: '/blocks'
+      preLoaderRoute: typeof AuthenticatedBlocksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/audit': {
       id: '/_authenticated/audit'
       path: '/audit'
@@ -156,6 +187,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
+  AuthenticatedBlocksRoute: typeof AuthenticatedBlocksRoute
   AuthenticatedObjectivesRoute: typeof AuthenticatedObjectivesRoute
   AuthenticatedPatientsRoute: typeof AuthenticatedPatientsRoute
   AuthenticatedWeekRoute: typeof AuthenticatedWeekRoute
@@ -163,6 +195,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,
+  AuthenticatedBlocksRoute: AuthenticatedBlocksRoute,
   AuthenticatedObjectivesRoute: AuthenticatedObjectivesRoute,
   AuthenticatedPatientsRoute: AuthenticatedPatientsRoute,
   AuthenticatedWeekRoute: AuthenticatedWeekRoute,

@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
-import { Calendar, Users, Target, History, LogOut } from "lucide-react";
+import { Calendar, Users, Target, History, LogOut, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.png";
@@ -32,6 +32,7 @@ function AuthGate() {
 const nav = [
   { to: "/week", label: "Semana", icon: Calendar },
   { to: "/patients", label: "Pacientes", icon: Users },
+  { to: "/blocks", label: "Bloques", icon: Layers },
   { to: "/objectives", label: "Objetivos", icon: Target },
   { to: "/audit", label: "Actividad", icon: History },
 ] as const;
