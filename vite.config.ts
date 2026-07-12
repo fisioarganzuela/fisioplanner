@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import path from "node:path";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -14,6 +15,16 @@ export default defineConfig({
     tailwindcss(),
     tsconfigPaths(),
   ],
+  resolve: {
+    alias: {
+      // Redirige el cliente auto-generado de Lovable Cloud al cliente externo
+      // que apunta al Supabase del usuario (vdrxstbayoyshukkkzub).
+      "@/integrations/supabase/client": path.resolve(
+        __dirname,
+        "src/integrations/supabase/external-client.ts",
+      ),
+    },
+  },
   server: {
     host: "::",
     port: 8080,
