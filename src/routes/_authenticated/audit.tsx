@@ -43,7 +43,7 @@ function AuditPage() {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from("audit_log").select("*").order("created_at", { ascending: false }).limit(300);
+      const { data } = await supabase.from("audit_log").select("*").order("created_at", { ascending: false }).limit(2000);
       setRows((data ?? []) as Row[]);
       setLoading(false);
     })();
@@ -51,7 +51,7 @@ function AuditPage() {
 
   return (
     <div className="p-8 max-w-4xl">
-      <PageHeader title="Actividad" subtitle="Quién hizo qué, cuándo y a qué hora. Últimos 300 registros." />
+      <PageHeader title="Actividad" subtitle="Quién hizo qué, cuándo y a qué hora. Últimos 2000 registros." />
       {loading ? (
         <p className="text-sm text-muted-foreground">Cargando…</p>
       ) : rows.length === 0 ? (
