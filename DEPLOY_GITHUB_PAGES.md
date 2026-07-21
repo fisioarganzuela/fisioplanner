@@ -18,9 +18,14 @@ En tu repo → **Settings → Secrets and variables → Actions → New reposito
 Son claves **publicables**, no privadas — es correcto usarlas en el frontend.
 
 ## 4. Configura la URL de redirección de Supabase
-En Lovable Cloud (backend) añade la URL pública de GitHub Pages a **Auth → URL Configuration → Redirect URLs**, por ejemplo:
+En el backend externo añade la URL pública de GitHub Pages a las URLs permitidas de autenticación, por ejemplo:
 ```
 https://<tu-usuario>.github.io/<tu-repo>/**
+```
+
+Si el repositorio se llama exactamente `<tu-usuario>.github.io`, añade también:
+```
+https://<tu-usuario>.github.io/**
 ```
 
 ## 5. Empuja a `main`
